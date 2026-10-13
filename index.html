@@ -168,13 +168,78 @@
     }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
   </style>
+  <style>
+    .top-actions{display:flex;align-items:center;gap:17px}
+    .menu-toggle{display:flex;align-items:center;gap:8px;border:1px solid #e2e6df;background:#fff;color:var(--forest);padding:9px 12px;border-radius:8px;font-size:11px;font-weight:700;min-height:40px}
+    .menu-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+    .menu-toggle:hover{background:var(--mint2);border-color:#cbd7cb}
+    .drawer-backdrop{display:none;position:fixed;inset:0;z-index:40;background:#17231db3;backdrop-filter:blur(3px)}
+    .drawer-backdrop.open{display:block}
+    .site-drawer{position:absolute;inset:0 auto 0 0;width:min(390px,calc(100vw - 30px));height:100vh;height:100dvh;overflow-y:auto;overscroll-behavior:contain;background:#fbfaf7;padding:22px 23px calc(22px + env(safe-area-inset-bottom));box-shadow:20px 0 60px #0e1a1433;transform:translateX(-102%);transition:transform .24s cubic-bezier(.2,.75,.25,1);display:flex;flex-direction:column}
+    .drawer-backdrop.open .site-drawer{transform:translateX(0)}
+    .drawer-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line)}
+    .drawer-head .brand{min-width:0}
+    .drawer-close{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:white;color:var(--ink);font-size:23px;line-height:1}
+    .drawer-profile{display:flex;align-items:center;gap:11px;padding:17px 0;border-bottom:1px solid var(--line)}
+    .drawer-profile .avatar{width:39px;height:39px}
+    .drawer-profile b,.drawer-profile small{display:block}
+    .drawer-profile b{font-size:12px}
+    .drawer-profile small{margin-top:2px;color:var(--muted);font-size:10px}
+    .account-preview{margin:17px 0 12px;padding:17px;background:#eef2eb;border:1px solid #e1e8de;border-radius:12px}
+    .account-preview .eyebrow,.drawer-nav-label{font-size:9px;letter-spacing:.13em}
+    .account-preview h2{font:700 19px Manrope;letter-spacing:-.45px;line-height:1.25;margin:7px 0}
+    .account-preview>p{font-size:11px;line-height:1.5;color:#626e64;margin:0 0 12px}
+    .signin-options{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+    .signin-options button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:43px;border:1px solid #dbe3d9;background:#fff;color:var(--forest);border-radius:7px;font-size:10px;font-weight:700;padding:8px 6px}
+    .signin-options button:hover{border-color:var(--leaf);background:#fafcf9}
+    .signin-options button span{font-size:14px}
+    .account-preview .account-status{font-size:9px;line-height:1.45;color:#788378;margin:10px 0 0}
+    .drawer-nav{padding:12px 0 15px;border-bottom:1px solid var(--line)}
+    .drawer-nav-label{color:var(--leaf);font-weight:700;margin:0 0 8px 10px}
+    .drawer-nav button{display:flex;align-items:center;gap:12px;width:100%;min-height:43px;padding:8px 10px;border:0;border-radius:7px;background:transparent;color:#424e45;text-align:left;font-size:12px;font-weight:600}
+    .drawer-nav button span{width:18px;text-align:center;color:var(--forest2);font-size:16px}
+    .drawer-nav button:hover,.drawer-nav button.active{background:#edf2ec;color:var(--forest)}
+    .drawer-about{padding:17px 1px 12px}
+    .drawer-about h3{font:700 13px Manrope;margin:14px 0 5px}
+    .drawer-about p{font-size:11px;line-height:1.55;color:#6c776e;margin:0}
+    .drawer-footer{margin-top:auto;padding-top:13px;border-top:1px solid var(--line)}
+    .care-link{display:block;padding:12px 13px;border:1px solid var(--line);border-radius:8px;background:white}
+    .care-link span,.care-link b{display:block}
+    .care-link span{color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+    .care-link b{font-size:12px;color:var(--forest);margin-top:4px}
+    .drawer-footer>p{font-size:9px;line-height:1.45;color:#899189;margin:10px 2px 0}
+    .mobile-nav{display:none!important}
+    @media(max-width:850px){
+      .topbar{padding-inline:20px}
+      .topbar-inner{gap:12px}
+      .top-links{display:none}
+      .top-actions{margin-left:auto;gap:10px}
+      .top-actions .top-meta{min-width:0;gap:9px}
+      .top-meta .demo-pill{display:none}
+      .menu-toggle{min-height:42px;padding-inline:11px}
+      .shell{padding-bottom:32px}
+    }
+    @media(max-width:570px){
+      .topbar{height:58px;padding-inline:15px}
+      .top-actions{gap:8px}
+      .top-actions .top-meta{min-width:0}
+      .top-meta>span:nth-child(2){display:none}
+      .top-actions .avatar{width:31px;height:31px}
+      .menu-toggle{width:42px;height:42px;justify-content:center;padding:0}
+      .menu-toggle span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+      .shell{padding-bottom:28px}
+      .site-drawer{width:min(390px,calc(100vw - 24px));padding:17px 18px calc(17px + env(safe-area-inset-bottom))}
+      .signin-options{grid-template-columns:1fr}
+      .signin-options button{justify-content:flex-start;padding-inline:12px}
+    }
+  </style>
 </head>
 <body>
 <div class="app">
   <header class="topbar"><div class="topbar-inner">
     <a class="brand" href="#today" aria-label="Rooted home"><span class="brand-mark">r.</span><span class="brand-name">rooted<span> / by Man Matters</span></span></a>
     <nav class="top-links" aria-label="Main navigation"><button class="active" data-page="today">Today</button><button data-page="progress">Progress</button><button data-page="journal">Photos</button><button data-page="learn">Guide</button><button id="restartSetup">Set up</button></nav>
-    <div class="top-meta"><span class="demo-pill">FICTIONAL DEMO · NO ACCOUNT</span><span>Week 5 of 26</span><span class="avatar">A</span></div>
+    <div class="top-actions"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteDrawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button><div class="top-meta"><span class="demo-pill">FICTIONAL DEMO · NO ACCOUNT</span><span>Week 5 of 26</span><span class="avatar">A</span></div></div>
   </div>
   </header>
   <div class="shell">
@@ -236,7 +301,16 @@
       </section>
     </main>
   </div>
-  <nav class="mobile-nav" aria-label="Mobile navigation"><button class="active" data-page="today"><span>◷</span>Today</button><button data-page="progress"><span>↗</span>Progress</button><button data-page="journal"><span>▧</span>Photos</button><button data-page="learn"><span>✳</span>Guide</button></nav>
+</div>
+<div class="drawer-backdrop" id="drawerBackdrop">
+  <aside class="site-drawer" id="siteDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true" tabindex="-1">
+    <div class="drawer-head"><a class="brand" href="#today" aria-label="Rooted home"><span class="brand-mark">r.</span><span class="brand-name">rooted<span> / by Man Matters</span></span></a><button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu">×</button></div>
+    <div class="drawer-profile"><span class="avatar">A</span><span><b>Arjun's routine</b><small>Fictional demo profile · Day 32</small></span></div>
+    <section class="account-preview" aria-labelledby="drawerTitle"><div class="eyebrow">YOUR PROGRESS</div><h2 id="drawerTitle">Pick up where you left off.</h2><p>Sign-in is a preview in this demo. Choose a method to see how it could work; don't enter personal details here.</p><div class="signin-options"><button type="button" data-signin-method="email"><span aria-hidden="true">✉</span>Continue with email</button><button type="button" data-signin-method="mobile"><span aria-hidden="true">▯</span>Continue with mobile</button></div><p class="account-status" id="accountStatus" aria-live="polite">No account service is connected. Your demo check-ins stay on this browser and do not sync.</p></section>
+    <nav class="drawer-nav" aria-label="App sections"><div class="drawer-nav-label">YOUR SPACE</div><button type="button" data-page="today"><span>◷</span>Today's routine</button><button type="button" data-page="progress"><span>↗</span>My progress</button><button type="button" data-page="journal"><span>▧</span>Photo journal</button><button type="button" data-page="learn"><span>✳</span>Journey guide</button></nav>
+    <section class="drawer-about"><div class="drawer-nav-label">ABOUT</div><h3>Man Matters</h3><p>A Mosaic Wellness men's care brand spanning hair, beard, skin, sexual wellness, and everyday wellbeing.</p><h3>Why consistency matters</h3><p>Hair routines can take months, and day-to-day changes are hard to notice. Rooted is a concept for helping people keep a routine and reflect on their own progress without changing clinician guidance.</p></section>
+    <div class="drawer-footer"><a class="care-link" href="mailto:otakushan479@gmail.com"><span>Customer care</span><b>otakushan479@gmail.com ↗</b></a><p>Rooted is an independent concept demo, not an official Man Matters service or medical care.</p></div>
+  </aside>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="modal-backdrop setup-backdrop" id="setupBackdrop" role="dialog" aria-modal="true" aria-labelledby="setupTitle"><div class="setup-modal"><div class="setup-brand"><span class="setup-wordmark"><span class="brand-mark">r.</span>rooted <span style="font-weight:500;color:var(--leaf)">/ by Man Matters</span></span><span class="setup-step" id="setupStepLabel">WELCOME</span></div><div class="setup-progress"><span id="setupProgressFill"></span></div><div class="setup-content" id="setupContent"></div><div class="setup-footer"><button type="button" class="setup-skip" id="setupSkip">Skip for now</button><p>No diagnosis. No account. Your answers stay in this demo.</p><button type="button" id="setupNext">Let's begin</button></div></div></div>
@@ -268,6 +342,13 @@
   function renderPhotos(){const root=document.getElementById('journalContent');if(!state.photos.length){root.innerHTML='<div class="journal-empty"><div class="camera">📷</div><h3>Your first check-in is waiting</h3><p>Photos help you compare over time. They are completely optional. In this demo, selected photos are previewed only in your browser session.</p><button class="primary" onclick="document.getElementById(\'photoInput\').click()">Choose photos</button></div>';return}root.innerHTML='<div class="journal-grid">'+state.photos.map((p,i)=>`<div class="journal-photo"><img src="${p.url}" alt="Your progress journal photo ${i+1}"><div>${p.kind==='scalp'?'Scalp check-in':'Hair progress'} · ${new Intl.DateTimeFormat('en-IN',{day:'numeric',month:'short'}).format(new Date())} <button data-remove="${i}" style="float:right;border:0;background:#0006;color:white;border-radius:5px">Remove</button></div></div>`).join('')+'</div>';root.querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>{URL.revokeObjectURL(state.photos[b.dataset.remove].url);state.photos.splice(b.dataset.remove,1);renderPhotos()}))}
   function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
   function changePage(page){document.querySelectorAll('.tabs-panel').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'})}
+  const drawerBackdrop=document.getElementById('drawerBackdrop'),siteDrawer=document.getElementById('siteDrawer'),menuToggle=document.getElementById('menuToggle'),drawerClose=document.getElementById('drawerClose');
+  function openDrawer(){drawerBackdrop.classList.add('open');siteDrawer.setAttribute('aria-hidden','false');menuToggle.setAttribute('aria-expanded','true');document.querySelector('.app').inert=true;document.body.style.overflow='hidden';drawerClose.focus()}
+  function closeDrawer(){if(!drawerBackdrop.classList.contains('open'))return;drawerBackdrop.classList.remove('open');siteDrawer.setAttribute('aria-hidden','true');menuToggle.setAttribute('aria-expanded','false');document.querySelector('.app').inert=false;document.body.style.overflow='';menuToggle.focus()}
+  menuToggle.addEventListener('click',openDrawer);drawerClose.addEventListener('click',closeDrawer);drawerBackdrop.addEventListener('click',e=>{if(e.target===drawerBackdrop)closeDrawer()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawerBackdrop.classList.contains('open'))closeDrawer()});
+  document.querySelectorAll('.drawer-nav [data-page]').forEach(button=>button.addEventListener('click',closeDrawer));
+  document.querySelectorAll('[data-signin-method]').forEach(button=>button.addEventListener('click',()=>{const method=button.dataset.signinMethod==='email'?'Email':'Mobile number';document.getElementById('accountStatus').textContent=`${method} sign-in preview selected. This demo does not ask for, send, or save your contact details; account access and cross-device sync are not connected.`}));
   document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>changePage(b.dataset.page)));
   document.getElementById('todayDate').textContent=new Intl.DateTimeFormat('en-IN',{weekday:'short',month:'short',day:'numeric'}).format(new Date());
   renderTasks();renderTimeline();renderPhotos();updateRate();
